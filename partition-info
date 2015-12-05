@@ -59,6 +59,13 @@ Commands:
         If --full is given then list:
           name, size, rotational, remove/usb, # of parts, model, and labels
 
+    is-linux=<device>
+        Return true if <device> is a Linux partition and return false otherwise.
+        Exit status:
+            0 = is a linux partition
+            1 = is not a linux partition
+            2 = some other failure (no device, etc)
+
     swap
         Display information for all swap partitions
 
@@ -149,11 +156,14 @@ main() {
     [ "$EX_BOOT" ] && test -r $LIVE_CONFIG && eval $(grep ^BOOT_UUID= $LIVE_CONFIG)
 
     case $cmnd in
-           all) do_all_parts    ;;
-        drives) do_drives       ;;
+           all) do_all_parts                 ;;
+        drives) do_drives                    ;;
+     is-linux*) do_is_linux $cmnd            ;;
           swap) ONLY_SWAP=true; do_all_parts ;;
-             *) do_parts $cmnd  ;;
+             *) do_parts $cmnd               ;;
     esac
+
+    exit 0
 }
 
 eval_argument() {
@@ -180,6 +190,46 @@ takes_param() {
         -exclude|-major-num|-min-size|[emM]) return 0 ;;
     esac
     return 1
+}
+
+do_is_linux() {
+    local cmnd=$1  drive=${1#is-linux=}
+
+    [ ${#drive} -eq 0 -o "$cmnd" = "$drive" ] && fatal "Must use \"is-linux=<device>\""
+    drive=${drive#/dev/}
+
+    [ ${#drive} -gt 0 ]       || fatal "No device given to is-linux"
+    [ -z "${drive%%*[0-9]}" ] || fatal "is-linux only works on partitions"
+
+    local dev=/dev/$drive
+
+    test -e $dev || fatal "device $dev does not exist"
+    test -b $dev || fatal "device $dev is not a block device"
+
+    local FSTYPE PARTTYPE
+    eval $(lsblk -Pno fstype,parttype $dev)
+
+    case $PARTTYPE in
+        0x83|0FC63DAF-8483-4772-8E79-3D69D8477DE4) success ;;
+             EBD0A0A2-B9E5-4433-87C0-68B6B72699C7)         ;;
+                                                *) failure ;;
+    esac
+
+    case $FSTYPE in
+        btrfs|ext2|ext3|ext4|jfs|nilfs2) success ;;
+               reiser4|reiserfs|ufs|xfs) success ;;
+                                      *) failure ;;
+    esac
+}
+
+success() {
+    echo yes
+    exit 0
+}
+
+failure() {
+    echo no
+    exit 1
 }
 
 do_drives() {
