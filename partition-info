@@ -267,7 +267,7 @@ _do_parts() {
     if [ "$TAB_DELIMIT" ]; then
         format="%s\t%s\t%s\t%s"
     else
-        format="%-${dev_width}s - %6s - %-${fs_width}s - %s"
+        format="%-${dev_width}s - %6s - %-${fs_width}s%s"
     fi
 
     [ "$SHOW_HEADER" ] && printf "$format\n" Name Size FS Label | sed 's/ - /   /g'
@@ -322,8 +322,9 @@ _do_parts() {
         fi
         # This is slower but it preserves special chars in labels
         local label=$(lsblk /dev/$NAME -no label)
-
-        printf "$format\n" "$DEV_OUTPUT$NAME" "$SIZE" "$FSTYPE" "$label"
+        [ -n "$label" -a -z "$TAB_DELIMIT" ] && label=" - $label"
+        printf "$format" "$DEV_OUTPUT$NAME" "$SIZE" "$FSTYPE" "$label"
+        echo
     done<<Lsblk
     $(lsblk $MAJOR_ARG $LSBLK_ARGS --output $PARTS_FIELDS $the_dev)
 Lsblk
