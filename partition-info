@@ -209,8 +209,8 @@ do_is_linux() {
     eval $(lsblk -Pno fstype,parttype $dev)
 
     case $PARTTYPE in
-        0x83|0FC63DAF-8483-4772-8E79-3D69D8477DE4) success ;;
-             EBD0A0A2-B9E5-4433-87C0-68B6B72699C7)         ;;
+        0x83|0fc63daf-8483-4772-8e79-3d69d8477de4) success ;;
+             ebd0a0a2-b9e5-4433-87c0-68b6b72699c7)         ;;
                                                 *) failure ;;
     esac
 
@@ -353,11 +353,11 @@ _do_parts() {
         case $PARTTYPE in
             0xc|0x27|0xef)                        continue ;;
             # GPT EFI partition
-            C12A7328-F81F-11D2-BA4B-00A0C93EC93B) continue ;;
+            c12a7328-f81f-11d2-ba4b-00a0c93ec93b) continue ;;
             # GPT Microsoft reserved partition
-            E3C9E316-0B5C-4DB8-817D-F92DF00215AE) continue ;;
+            e3c9e316-0b5c-4db8-817d-f92df00215ae) continue ;;
             # GPT Windows Recovery Environment
-            DE94BBA4-06D1-4D40-A16A-BFD50179D6AC) continue ;;
+            de94bba4-06d1-4d40-a16a-bfd50179d6ac) continue ;;
         esac
 
         greater_than_min_size $NAME || continue
