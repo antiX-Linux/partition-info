@@ -156,6 +156,10 @@ main() {
     # Get UUID of live boot partition into BOOT_UUID variable
     [ "$EX_BOOT" ] && test -r $LIVE_CONFIG && eval $(grep ^BOOT_UUID= $LIVE_CONFIG)
 
+    local os_file=/etc/os-release
+    [ $UID -ne 0 -a -r $os_file ] && grep -iq debian $os_file \
+        && fatal "This progam must be run as root on Debian systems"
+
     case $cmnd in
            all) do_all_parts                 ;;
         drives) do_drives                    ;;
