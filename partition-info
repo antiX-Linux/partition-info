@@ -99,7 +99,7 @@ Options:
         Don't show the header line
 
     -r, --raw
-        Normally we simplify the names of these filesystem: 
+        Normally we simplify the names of these filesystem:
             vfat, hfsplus, ntfs-3g.
         Use the option to disable that simplification.
 
