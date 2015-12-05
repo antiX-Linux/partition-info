@@ -60,11 +60,10 @@ Commands:
           name, size, rotational, remove/usb, # of parts, model, and labels
 
     is-linux=<device>
-        Return true if <device> is a Linux partition and return false otherwise.
-        Exit status:
-            0 = is a linux partition
-            1 = is not a linux partition
-            2 = some other failure (no device, etc)
+        Determine if <device> is a Linux partition.
+        Return 0 and print "yes" if it is.
+        Return 1 and print "no" if it is not.
+        Return 2 and print an error message if there is an error.
 
     swap
         Display information for all swap partitions
