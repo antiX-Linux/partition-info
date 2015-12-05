@@ -302,7 +302,7 @@ _do_parts() {
         # https://en.wikipedia.org/wiki/GUID_Partition_Table#Partition_type_GUIDs
         # for GPT ids below
         case $PARTTYPE in
-            0C01|2700|EF00)                       continue ;;
+            0xc|0x27|0xef)                        continue ;;
             # GPT EFI partition
             C12A7328-F81F-11D2-BA4B-00A0C93EC93B) continue ;;
             # GPT Microsoft reserved partition
