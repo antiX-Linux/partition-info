@@ -347,6 +347,7 @@ _do_parts() {
         [ "$ONLY_SWAP" -a "$FSTYPE" != "swap" ] && continue
 
         case $FSTYPE:$EX_SWAP in swap:true) continue ;; esac
+        case $FSTYPE          in   iso9660) continue ;; esac
 
         [ -n "$BOOT_UUID" -a "$BOOT_UUID" = "$UUID" ] && continue
 
