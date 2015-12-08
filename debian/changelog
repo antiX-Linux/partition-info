@@ -1,3 +1,10 @@
+partition-info (1.0mx150+3) mx; urgency=low
+
+  *  Unconditionally exclude iso9660 partitions
+
+ -- anticapitalista <antiX@operamail.com>  Tue, 08 Dec 2015 12:56:12 +0200
+
+
 partition-info (1.0mx150+2) mx; urgency=low
 
   * Only allow root to run this program on Debian systems 
