@@ -134,7 +134,7 @@ main() {
     [ $# -gt 0 ] && fatal "Expected only one command. Got: $cmnd $*"
 
     local ex_param
-    for ex_param in ${EXCLUDE/,/ /}; do
+    for ex_param in $(echo $EXCLUDE | sed 's/,/ /g'); do
         case $ex_param in
             boot|b) EX_BOOT=true                                 ;;
             swap|s) EX_SWAP=true                                 ;;
@@ -318,14 +318,16 @@ _do_parts() {
     local dev_width=$(get_dev_width $MAJOR_ARG $the_dev)
     local  fs_width=$(get_field_width fstype -n $MAJOR_ARG $the_dev)
 
-    local format
+    local format lablab
     if [ "$TAB_DELIMIT" ]; then
         format="%s\t%s\t%s\t%s"
+        lablab="Label"
     else
         format="%-${dev_width}s - %6s - %-${fs_width}s%s"
+        lablab=" - Label"
     fi
 
-    [ "$SHOW_HEADER" ] && printf "$format\n" Name Size FS Label | sed 's/ - /   /g'
+    [ "$SHOW_HEADER" ] && printf "$format\n" Name Size FS "$lablab" | sed 's/ - /   /g'
 
     local NAME SIZE FSTYPE PARTTYPE TYPE LABEL
     while read line; do
@@ -337,9 +339,7 @@ _do_parts() {
 
         #echo "$line"; #continue
 
-        # Require a trailing digit in $NAME
-        # (we may need to change this for LVM)
-        [ -n "$NAME" -a -z "${NAME%%*[0-9]}" ] || continue
+        [ "$TYPE" = "disk" ] && continue
 
         # Ignore extended boot record partitions
         case $PARTTYPE in 0xf) continue;; esac
@@ -388,7 +388,7 @@ Lsblk
 
 get_size() {
     local part=$1
-    local drive=$(echo $part | sed -r 's/[0-9]+$//')
+    local drive=$(echo $part | sed -r 's/[p0-9]?[0-9]$//')
     local path=$drive
     [ "$drive" != "$part" ] && path=$drive/$part
     local file=/sys/block/$path/size
@@ -397,7 +397,7 @@ get_size() {
 
 is_usb() {
     local dev=${1##*/}
-    local drive=$(echo $dev | sed -r 's/[0-9]+$//')
+    local drive=$(echo $dev | sed -r 's/[p0-9]?[0-9]$//')
     local dir=/sys/block/$drive
     local devpath=$(readlink -f $dir/device)
     [ "$devpath" ] || return 1
