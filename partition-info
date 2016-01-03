@@ -216,7 +216,7 @@ do_is_linux() {
 
     case $PARTTYPE in
         0x83|0fc63daf-8483-4772-8e79-3d69d8477de4) success ;;
-             ebd0a0a2-b9e5-4433-87c0-68b6b72699c7)         ;;
+          ""|ebd0a0a2-b9e5-4433-87c0-68b6b72699c7)         ;;
                                                 *) failure ;;
     esac
 
@@ -382,13 +382,21 @@ _do_parts() {
         printf "$format" "$DEV_OUTPUT$NAME" "$SIZE" "$FSTYPE" "$label"
         echo
     done<<Lsblk
-    $(lsblk $MAJOR_ARG $LSBLK_ARGS --output $PARTS_FIELDS $the_dev)
+$(lsblk $MAJOR_ARG $LSBLK_ARGS --output $PARTS_FIELDS $the_dev)
 Lsblk
 }
 
+get_drive() {
+    local drive part=${1##*/}
+    case $part in
+        mmcblk*) echo ${part%p[0-9]}                        ;;
+              *) drive=${part%[0-9]}  ; echo ${drive%[0-9]} ;;
+    esac
+}
+
 get_size() {
-    local part=$1
-    local drive=$(echo $part | sed -r 's/[p0-9]?[0-9]$//')
+    local part=${1##*/}
+    local drive=$(get_drive $part)
     local path=$drive
     [ "$drive" != "$part" ] && path=$drive/$part
     local file=/sys/block/$path/size
@@ -396,8 +404,8 @@ get_size() {
 }
 
 is_usb() {
-    local dev=${1##*/}
-    local drive=$(echo $dev | sed -r 's/[p0-9]?[0-9]$//')
+    local part=${1##*/}
+    local drive=$(get_drive $part)
     local dir=/sys/block/$drive
     local devpath=$(readlink -f $dir/device)
     [ "$devpath" ] || return 1
