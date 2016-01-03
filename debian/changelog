@@ -1,8 +1,14 @@
 partition-info (1.0mx150+3) mx; urgency=low
 
-  *  Unconditionally exclude iso9660 partitions
+  * Unconditionally exclude iso9660 partitions
+  * Fix bug in parsing --exclude= argument
+  * Fix the header line when " - " is used as separator
+  * Fix get_size() and is_usb() to work with mmcblk0p1 partitions.
+  * In dHandle mmcblk names better when we get size and is_usbo_is_linux() 
+  * fall back to using fstype if there is no parttype
+  * remove indent when calling lsblk in a here string
 
- -- anticapitalista <antiX@operamail.com>  Tue, 08 Dec 2015 12:56:12 +0200
+ -- anticapitalista <antiX@operamail.com>  Sun, 03 Jan 201 14:15:12 +0200
 
 
 partition-info (1.0mx150+2) mx; urgency=low
