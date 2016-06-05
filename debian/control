@@ -1,7 +1,7 @@
 Source: partition-info
 Section: utils
 Priority: extra
-Maintainer: anticapitalista <antiX@operamail.com>
+Maintainer: anticapitalista <antix@operamail.com>
 Build-Depends: debhelper (>= 8.0.0)
 Standards-Version: 3.9.3
 

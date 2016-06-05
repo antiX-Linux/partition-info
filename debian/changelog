@@ -1,3 +1,9 @@
+partition-info (1.0mx150+4) unstable; urgency=medium
+
+  * Add 259 to default list of major device numbers
+
+ -- anticapitalista <antix@operamail.com>  Sat, 04 Jun 2016 23:50:59 +0300
+
 partition-info (1.0mx150+3) mx; urgency=low
 
   * Unconditionally exclude iso9660 partitions
