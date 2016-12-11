@@ -1,3 +1,9 @@
+partition-info (1.0mx150+5) unstable; urgency=medium
+
+  * added 202 to major list for xen
+
+ -- anticapitalista <antix@operamail.com>  Sun, 11 Dec 2016 13:23:45 +0200
+
 partition-info (1.0mx150+4) unstable; urgency=medium
 
   * Add 259 to default list of major device numbers
