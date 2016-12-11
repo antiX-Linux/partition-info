@@ -1,6 +1,7 @@
-partition-info (1.0mx150+5) unstable; urgency=medium
+partition-info (1.1) unstable; urgency=medium
 
   * added 202 to major list for xen
+  * added efi-install script
 
  -- anticapitalista <antix@operamail.com>  Sun, 11 Dec 2016 13:23:45 +0200
 
