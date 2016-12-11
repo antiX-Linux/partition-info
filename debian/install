@@ -1,1 +1,2 @@
-partition-info sbin
+partition-info 	sbin
+efi-install 	sbin
