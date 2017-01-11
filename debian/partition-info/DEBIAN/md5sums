@@ -1,0 +1,4 @@
+0bf5b1059cc370cb6a2757c062f76579  sbin/efi-install
+429ca990b14247c9eca2bb6b2ea32260  sbin/partition-info
+b0d3ec01720bdc2c82b16beeeb796cca  usr/share/doc/partition-info/changelog.gz
+453fb317f80e53d8caaeef83ff8b32ab  usr/share/doc/partition-info/copyright
