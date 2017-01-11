@@ -235,8 +235,8 @@ do_split_device() {
     case $dev in
         mmcblk*p[1-9]) root=${dev%p[1-9]}  ; part=${dev#${root}p}  ;;
           nvme*p[1-9]) root=${dev%p[1-9]}  ; part=${dev#${root}p}  ;;
-              mmcblk*) root=$dev
-                nvme*) root=$dev                                   ;;                                   ;;
+              mmcblk*) root=$dev                                   ;;
+                nvme*) root=$dev                                   ;;
                     *) root=${dev%[0-9]}   ; root=${root%[0-9]}
                        part=${dev#$root}                           ;;
     esac
