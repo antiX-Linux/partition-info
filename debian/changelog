@@ -1,8 +1,8 @@
-partition-info (1.4~mx17) mx; urgency=medium
+partition-info (1.4) unstable; urgency=medium
 
-  * minor change to do_is_linux 
+  * minor change to do_is_linux - thanks dolphin_oracle
 
- -- anticapitalista <dolphin@littlebyte>  Sat, 10 Mar 2018 21:41:57 -0500
+ -- anticapitalista <antix@operamail.com>  Sat, 10 Mar 2018 21:41:57 -0500
 
 partition-info (1.3) unstable; urgency=medium
 
