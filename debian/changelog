@@ -1,3 +1,9 @@
+partition-info (1.4~mx17) mx; urgency=medium
+
+  * minor change to do_is_linux 
+
+ -- anticapitalista <dolphin@littlebyte>  Sat, 10 Mar 2018 21:41:57 -0500
+
 partition-info (1.3) unstable; urgency=medium
 
   * Fixed lines 238 and 239
